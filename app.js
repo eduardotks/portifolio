@@ -5,7 +5,7 @@ const supported=['pt-BR','en','es'];
 const $=selector=>document.querySelector(selector);
 const $$=selector=>[...document.querySelectorAll(selector)];
 const escape=value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
-let lang='pt-BR',projectFilter='all',skillFilter='all',activeWork='proconsig',lastProjectTrigger=null,toastTimeout;
+let lang='pt-BR',projectFilter='all',skillFilter='all',activeWork='proconsig',coursesExpanded=false,lastProjectTrigger=null,toastTimeout;
 const openJobs=new Set();
 const localized=value=>typeof value==='string'?value:value[lang];
 const copy=()=>Object.fromEntries(Object.entries(ui).map(([key,value])=>[key,localized(value)]));
@@ -47,6 +47,15 @@ function renderLearning(){
  $('#languages-list').innerHTML=languages.map(item=>`<div class="language-row"><span class="language-name">${escape(localized(item.name))}</span><span class="language-level">${escape(localized(item.level))}</span></div>`).join('');
  $('#certifications-list').innerHTML=certificates.map(item=>`<article class="certificate-row"><span class="certificate-marker" aria-hidden="true">↗</span><div><h4>${escape(localized(item.title))}</h4><p>${escape(item.issuer)}${item.date?' · '+escape(localized(item.date)):''}</p></div></article>`).join('');
  $('#courses-list').innerHTML=courses.map(course=>`<li>${escape(localized(course))}</li>`).join('');
+ setCoursesExpanded(coursesExpanded);
+}
+
+function setCoursesExpanded(expanded){
+ coursesExpanded=expanded;
+ $('#courses-toggle').setAttribute('aria-expanded',String(expanded));
+ $('#courses-toggle-label').textContent=expanded?copy().hideCourses:copy().moreCourses;
+ $('#courses-toggle .details-plus').textContent=expanded?'−':'+';
+ $('#courses-list').hidden=!expanded;
 }
 
 function projectMarkup(project){
@@ -80,6 +89,7 @@ $$('[data-lang]').forEach(button=>button.addEventListener('click',()=>setLanguag
 $('#project-filters').addEventListener('click',event=>{const button=event.target.closest('[data-project-filter]');if(!button)return;projectFilter=button.dataset.projectFilter;renderProjects();$('#project-filters').querySelector(`[data-project-filter="${projectFilter}"]`).focus({preventScroll:true});});
 $('#skill-filters').addEventListener('click',event=>{const button=event.target.closest('[data-skill-filter]');if(!button)return;skillFilter=button.dataset.skillFilter;renderSkills();$('#skill-filters').querySelector(`[data-skill-filter="${skillFilter}"]`).focus({preventScroll:true});});
 $('#projects-grid').addEventListener('click',event=>{const button=event.target.closest('[data-open-project]');if(button)openProject(button.dataset.openProject,button);});
+$('#courses-toggle').addEventListener('click',()=>setCoursesExpanded(!coursesExpanded));
 $('#timeline').addEventListener('click',event=>{const tab=event.target.closest('[data-work-tab]');if(tab)selectWork(tab.dataset.workTab);});
 $('#timeline').addEventListener('keydown',event=>{const tab=event.target.closest('[data-work-tab]');if(!tab||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const tabs=$$('[data-work-tab]');let index=tabs.indexOf(tab);index=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;selectWork(tabs[index].dataset.workTab,true);});
 $('#timeline').addEventListener('toggle',event=>{if(!event.target.matches('.job-details'))return;if(event.target.open)openJobs.add(event.target.dataset.job);else openJobs.delete(event.target.dataset.job);},true);
