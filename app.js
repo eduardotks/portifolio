@@ -40,7 +40,7 @@ function selectWork(id,focus=false){
 function renderSkills(){
  const c=copy();
  $('#skill-filters').innerHTML=[{id:'all',name:c.all},...skillGroups].map(group=>`<button type="button" data-skill-filter="${group.id}" aria-pressed="${skillFilter===group.id}">${escape(localized(group.name))}</button>`).join('');
- $('#skills-grid').innerHTML=skillGroups.filter(g=>skillFilter==='all'||g.id===skillFilter).map(group=>`<article class="skill-group"><div class="skill-group-header"><h3>${escape(localized(group.name))}</h3><span aria-hidden="true">${String(skillGroups.indexOf(group)+1).padStart(2,'0')}</span></div><ul class="skill-items">${group.items.map(item=>`<li>${escape(localized(item))}</li>`).join('')}</ul></article>`).join('');
+ $('#skills-grid').innerHTML=skillGroups.filter(g=>skillFilter==='all'||g.id===skillFilter).map(group=>`<article class="skill-group${group.description?' skill-group-featured':''}"><div class="skill-group-header"><h3>${escape(localized(group.name))}</h3><span aria-hidden="true">${String(skillGroups.indexOf(group)+1).padStart(2,'0')}</span></div>${group.description?`<p class="skill-description">${escape(localized(group.description))}</p>`:''}<ul class="skill-items">${group.items.map(item=>`<li>${escape(localized(item))}</li>`).join('')}</ul></article>`).join('');
 }
 
 function renderLearning(){
