@@ -1,0 +1,9 @@
+{
+  "name": "eduardo-takeuchi-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Trilingual professional portfolio of Eduardo Costa Takeuchi",
+  "scripts": {"dev": "node server.mjs", "check": "node scripts/check.mjs"},
+  "engines": {"node": ">=20"}
+}
