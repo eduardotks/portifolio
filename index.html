@@ -12,6 +12,7 @@
   <meta property="og:url" content="https://eduardotks.github.io/portifolio/">
   <link rel="canonical" href="https://eduardotks.github.io/portifolio/">
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <script>try{const t=localStorage.getItem('eduardo-portfolio-theme');document.documentElement.dataset.theme=t==='dark'||t==='light'?t:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{document.documentElement.dataset.theme='light'}</script>
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./app.js"></script>
 </head>
@@ -29,6 +30,7 @@
           <button type="button" data-lang="en" aria-pressed="false" lang="en" title="English">EN</button>
           <button type="button" data-lang="es" aria-pressed="false" lang="es" title="Español">ES</button>
         </div>
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Ativar tema escuro" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path class="theme-moon" d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/><g class="theme-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></g></svg></button>
         <a class="nav-contact" href="#contact"><span data-t="navContact">Vamos conversar</span><span aria-hidden="true">↗</span></a>
         <button type="button" class="menu-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span></button>
       </div>

@@ -68,6 +68,10 @@ function openProject(id,trigger){
  lastProjectTrigger=trigger;$('#dialog-content').innerHTML=projectMarkup(project);$('#project-dialog').dataset.project=id;$('#project-dialog').showModal();document.body.style.overflow='hidden';$('.dialog-close').focus();
 }
 
+function updateThemeControl(){const dark=document.documentElement.dataset.theme==='dark';const label=dark?copy().themeLight:copy().themeDark;$('#theme-toggle').setAttribute('aria-pressed',String(dark));$('#theme-toggle').setAttribute('aria-label',label);$('#theme-toggle').title=label;$('meta[name="theme-color"]').content=dark?'#10151d':'#f5f4ef';}
+function setTheme(theme){document.documentElement.dataset.theme=theme;try{localStorage.setItem('eduardo-portfolio-theme',theme);}catch{}updateThemeControl();}
+$('#theme-toggle').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+
 function setMenu(open){$('.site-header').classList.toggle('menu-open',open);$('.menu-toggle').setAttribute('aria-expanded',String(open));$('.menu-toggle').setAttribute('aria-label',open?copy().menuClose:copy().menuOpen);}
 function normalizeLanguage(value){if(!value)return null;if(value.toLowerCase().startsWith('pt'))return 'pt-BR';if(value.toLowerCase().startsWith('en'))return 'en';if(value.toLowerCase().startsWith('es'))return 'es';return null;}
 
@@ -79,7 +83,7 @@ function setLanguage(next,updateUrl=true){
  $('#main-nav').setAttribute('aria-label',c.navLabel);$('#project-filters').setAttribute('aria-label',c.projectFilterLabel);$('#skill-filters').setAttribute('aria-label',c.skillFilterLabel);$('.hero-art').setAttribute('aria-label',c.artAria);$('.dialog-close').setAttribute('aria-label',c.closeProject);$('.wordmark').setAttribute('aria-label',`${profile.name}, ${c.home}`);$('.hero-bottom a').setAttribute('aria-label',c.viewWork);
  $('.tile-keychain .tile-index').textContent=c.tileSecurity;$('.tile-focus .tile-index').textContent=c.tileFocus;
  $('meta[name="description"]').setAttribute('content',c.seoDescription);$('meta[property="og:title"]').setAttribute('content',c.seoTitle);$('meta[property="og:description"]').setAttribute('content',c.seoDescription);
- renderProjects();renderExperience();renderSkills();renderLearning();setMenu(false);
+ renderProjects();renderExperience();renderSkills();renderLearning();setMenu(false);updateThemeControl();
  const dialog=$('#project-dialog');if(dialog.open)$('#dialog-content').innerHTML=projectMarkup(projects.find(p=>p.id===dialog.dataset.project));
  try{localStorage.setItem('eduardo-portfolio-language',lang);}catch{}
  if(updateUrl){const url=new URL(location.href);url.searchParams.set('lang',lang);history.replaceState(null,'',url.pathname+url.search+url.hash);}

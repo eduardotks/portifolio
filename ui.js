@@ -1,5 +1,6 @@
 const l=(pt,en,es)=>({'pt-BR':pt,en,es});
 export const ui={
+ themeDark:l('Ativar tema escuro','Switch to dark theme','Activar tema oscuro'),themeLight:l('Ativar tema claro','Switch to light theme','Activar tema claro'),
  skip:l('Pular para o conteúdo','Skip to content','Saltar al contenido'),
  navProjects:l('Projetos','Projects','Proyectos'),navExperience:l('Experiência','Experience','Experiencia'),navSkills:l('Competências','Skills','Competencias'),navAbout:l('Sobre','About','Sobre mí'),navContact:l('Vamos conversar','Let’s talk','Hablemos'),
  role:l('Full Stack Developer & Analista de Sistemas','Full Stack Developer & Systems Analyst','Full Stack Developer y analista de sistemas'),
